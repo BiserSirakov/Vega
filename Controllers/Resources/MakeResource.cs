@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
 
     public class MakeResource
     {
@@ -12,6 +13,8 @@
 
         public int Id { get; set; }
         
+        [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         public ICollection<ModelResource> Models { get; set; }
