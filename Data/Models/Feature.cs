@@ -1,11 +1,10 @@
 ﻿namespace Vega.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using Common.Models;
 
-    public class Feature
+    public class Feature : BaseModel
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }

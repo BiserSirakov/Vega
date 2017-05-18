@@ -4,19 +4,13 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
 
-    public class MakeResource
+    public class MakeResource : KeyValuePairResource
     {
         public MakeResource()
         {
-            this.Models = new Collection<ModelResource>();
+            this.Models = new Collection<KeyValuePairResource>();
         }
 
-        public int Id { get; set; }
-        
-        [Required]
-        [MaxLength(100)]
-        public string Name { get; set; }
-
-        public ICollection<ModelResource> Models { get; set; }
+        public ICollection<KeyValuePairResource> Models { get; set; }
     }
 }

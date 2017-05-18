@@ -8,9 +8,10 @@ using Vega.Data;
 namespace Vega.Data.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    partial class VegaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170518074523_Vehicles")]
+    partial class Vehicles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -20,14 +21,6 @@ namespace Vega.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<DateTime>("DeletedOn");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -43,14 +36,6 @@ namespace Vega.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<DateTime>("DeletedOn");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("ModifiedOn");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
@@ -65,15 +50,7 @@ namespace Vega.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<DateTime>("DeletedOn");
-
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<int>("MakeId");
-
-                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -102,17 +79,11 @@ namespace Vega.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<DateTime>("DeletedOn");
-
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<bool>("IsRegistered");
 
-                    b.Property<int>("ModelId");
+                    b.Property<DateTime>("LastUpdate");
 
-                    b.Property<DateTime?>("ModifiedOn");
+                    b.Property<int>("ModelId");
 
                     b.HasKey("Id");
 

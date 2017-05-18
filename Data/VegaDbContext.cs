@@ -1,7 +1,12 @@
 namespace Vega.Data
 {
+    using System;
+    using System.Linq;
+
     using Microsoft.EntityFrameworkCore;
-    using Vega.Data.Models;
+
+    using Common.Models;
+    using Models;
 
     public class VegaDbContext : DbContext
     {
@@ -20,8 +25,31 @@ namespace Vega.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<VehicleFeature>().HasKey(vf =>
-              new { vf.VehicleId, vf.FeatureId });
+            modelBuilder.Entity<VehicleFeature>().HasKey(x => new { x.VehicleId, x.FeatureId });
+        }
+
+        public override int SaveChanges()
+        {
+            this.ApplyAuditInfoRules();
+            return base.SaveChanges();
+        }
+
+        private void ApplyAuditInfoRules()
+        {
+            foreach (var entry in
+                this.ChangeTracker.Entries()
+                    .Where(e => e.Entity is IAuditInfo && ((e.State == EntityState.Added) || (e.State == EntityState.Modified))))
+            {
+                var entity = (IAuditInfo)entry.Entity;
+                if (entry.State == EntityState.Added && entity.CreatedOn == default(DateTime))
+                {
+                    entity.CreatedOn = DateTime.UtcNow;
+                }
+                else
+                {
+                    entity.ModifiedOn = DateTime.UtcNow;
+                }
+            }
         }
     }
 }

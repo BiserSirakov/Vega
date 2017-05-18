@@ -12,15 +12,14 @@
     using Data.Models;
     using Resources;
 
-    public class MakesController : Controller
+    public class MakesController : BaseController
     {
         private readonly VegaDbContext _context;
-        private readonly IMapper _mapper;
 
-        public MakesController(VegaDbContext context, IMapper mapper)
+        public MakesController(IMapper mapper, VegaDbContext context)
+            : base(mapper)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         [HttpGet("api/makes")]
@@ -28,7 +27,7 @@
         {
             var makes = await _context.Makes.Include(x => x.Models).ToListAsync();
 
-            return _mapper.Map<List<Make>, List<MakeResource>>(makes);
+            return Mapper.Map<List<MakeResource>>(makes);
         }
     }
 }

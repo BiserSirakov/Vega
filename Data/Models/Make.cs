@@ -2,15 +2,15 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    
+    using Common.Models;
 
-    public class Make
+    public class Make : BaseModel
     {
         public Make()
         {
             this.Models = new HashSet<Model>();
         }
-
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]

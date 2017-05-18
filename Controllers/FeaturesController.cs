@@ -11,23 +11,22 @@
     using Data;
     using Resources;
 
-    public class FeaturesController : Controller
+    public class FeaturesController : BaseController
     {
         private readonly VegaDbContext _context;
-        private readonly IMapper _mapper;
 
-        public FeaturesController(VegaDbContext context, IMapper mapper)
+        public FeaturesController(IMapper mapper, VegaDbContext context)
+            : base(mapper)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         [HttpGet("api/features")]
-        public async Task<IEnumerable<FeatureResource>> GetFeatures()
+        public async Task<IEnumerable<KeyValuePairResource>> GetFeatures()
         {
             var features = await _context.Features.ToListAsync();
 
-            return _mapper.Map<List<FeatureResource>>(features);
+            return Mapper.Map<List<KeyValuePairResource>>(features);
         }
     }
 }

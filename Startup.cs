@@ -11,6 +11,9 @@ namespace Vega
     using AutoMapper;
 
     using Data;
+    using Data.Common;
+    using Services;
+    using Services.Contracts;
 
     public class Startup
     {
@@ -31,6 +34,11 @@ namespace Vega
         {
             services.AddDbContext<VegaDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
+            // services.AddScoped<DbContext, KamaxWebDbContext>();
+
+            services.AddScoped<IVehiclesService, VehiclesService>();
 
             services.AddAutoMapper();
 
