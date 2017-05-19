@@ -1,3 +1,4 @@
+import * as Raven from 'raven-js';
 import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -14,6 +15,10 @@ import { ToastyModule } from 'ng2-toasty';
 
 import { VehicleService } from './services/vehicle.service';
 import { AppErrorHandler } from "./app.error-handler";
+
+Raven
+  .config('https://0a6243957a294c89a1b11a58f4ca647c@sentry.io/170106')
+  .install();
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -35,6 +40,7 @@ import { AppErrorHandler } from "./app.error-handler";
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
+            { path: 'vehicles/:id', component: VehicleFormComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],
