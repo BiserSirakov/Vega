@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UniversalModule } from 'angular2-universal';
 
@@ -10,7 +10,10 @@ import { HomeComponent } from './components/home/home.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 
+import { ToastyModule } from 'ng2-toasty';
+
 import { VehicleService } from './services/vehicle.service';
+import { AppErrorHandler } from "./app.error-handler";
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -24,6 +27,7 @@ import { VehicleService } from './services/vehicle.service';
     ],
     imports: [
         FormsModule,
+        ToastyModule.forRoot(),
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,6 +39,7 @@ import { VehicleService } from './services/vehicle.service';
         ])
     ],
     providers: [
+        { provide: ErrorHandler, useClass: AppErrorHandler },
         VehicleService
     ]
 })
