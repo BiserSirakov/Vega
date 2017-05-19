@@ -27,6 +27,10 @@
             // API Resource to Domain
             CreateMap<SaveVehicleResource, Vehicle>()
               .ForMember(v => v.Id, opt => opt.Ignore())
+              .ForMember(v => v.CreatedOn, opt => opt.Ignore())
+              .ForMember(v => v.ModifiedOn, opt => opt.Ignore())
+              .ForMember(v => v.DeletedOn, opt => opt.Ignore())
+              .ForMember(v => v.IsDeleted, opt => opt.Ignore())
               .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.Contact.Name))
               .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))
               .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vr => vr.Contact.Phone))

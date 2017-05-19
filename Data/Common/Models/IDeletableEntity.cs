@@ -6,6 +6,6 @@ namespace Vega.Data.Common.Models
     {
         bool IsDeleted { get; set; }
 
-        DateTime DeletedOn { get; set; }
+        DateTime? DeletedOn { get; set; }
     }
 }

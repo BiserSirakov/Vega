@@ -36,7 +36,7 @@ namespace Vega
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
-            // services.AddScoped<DbContext, KamaxWebDbContext>();
+            services.AddScoped<DbContext, VegaDbContext>();
 
             services.AddScoped<IVehiclesService, VehiclesService>();
 

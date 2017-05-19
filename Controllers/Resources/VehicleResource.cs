@@ -23,7 +23,13 @@ namespace Vega.Controllers.Resources
 
         public ContactResource Contact { get; set; }
 
-        public DateTime LastUpdate { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         public ICollection<KeyValuePairResource> Features { get; set; }
     }

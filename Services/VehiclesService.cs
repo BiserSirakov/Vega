@@ -20,7 +20,11 @@ namespace Vega.Services
 
         public IEnumerable<Vehicle> GetAll(bool withDeleted = false)
         {
-            return _vehicles.GetAll(withDeleted).ToList();
+            return _vehicles.GetAll(withDeleted, 
+                vehicles => vehicles
+                .Include(v => v.Model).ThenInclude(m => m.Make)
+                .Include(v => v.Features).ThenInclude(vf => vf.Feature))
+                .ToList();
         }
 
         public Vehicle GetById(int id, bool withIncludings = true)
