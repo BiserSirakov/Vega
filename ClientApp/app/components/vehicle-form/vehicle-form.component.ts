@@ -40,7 +40,9 @@ export class VehicleFormComponent implements OnInit {
         private vehicleService: VehicleService) {
 
         route.params.subscribe(p => {
-            this.vehicle.id = +p['id']; // put + to convert to number
+            if (p['id']) {
+                this.vehicle.id = +p['id']; // put + to convert to number
+            }
         });
     }
 
@@ -115,7 +117,9 @@ export class VehicleFormComponent implements OnInit {
         }
         else {
             this.vehicleService.create(this.vehicle)
-                .subscribe(x => this.router.navigate(['/vehicles' + x.id]));
+                .subscribe(x => {
+                    this.router.navigate(['/vehicles/' + x.id])
+                });
         }
     }
 

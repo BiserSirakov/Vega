@@ -26,17 +26,17 @@
 
     <p>Is this vehicle registered?</p>
     <label for="registered" class="radio-inline">
-    <input type="radio" name="isRegistered" id="registered" [value]="true" [(ngModel)]="vehicle.isRegistered"> Yes
+        <input type="radio" name="isRegistered" id="registered" [value]="true" [(ngModel)]="vehicle.isRegistered"> Yes
     </label>
     <label for="notRegistered" class="radio-inline">
-    <input type="radio" name="isRegistered" id="notRegistered" [value]="false" [(ngModel)]="vehicle.isRegistered"> No
+        <input type="radio" name="isRegistered" id="notRegistered" [value]="false" [(ngModel)]="vehicle.isRegistered"> No
     </label>
 
     <h2>Features</h2>
 
     <div *ngFor="let f of features" class="checkbox">
         <label for="feature-{{ f.id }}">
-            <input id="feature-{{ f.id }}" type="checkbox" (change)="onFeatureToggle(f.id, $event)" [checked]="vehicle.features.includes(f.id)"/> {{ f.name }}
+            <input id="feature-{{ f.id }}" type="checkbox" (change)="onFeatureToggle(f.id, $event)" [checked]="vehicle.features.includes(f.id)" /> {{ f.name }}
         </label>
     </div>
 
@@ -52,7 +52,7 @@
     <div class="form-group">
         <label for="contactPhone">Phone</label>
         <input id="contactPhone" type="text" class="form-control" [(ngModel)]="vehicle.contact.phone" name="contactPhone" required
-            #contactPhone="ngModel">
+               #contactPhone="ngModel">
     </div>
 
     <div class="alert alert-danger" *ngIf="contactPhone.touched && !contactPhone.valid">Please specify the Contact phone.</div>
@@ -60,7 +60,7 @@
     <div class="form-group">
         <label for="contactEmail">Email</label>
         <input id="contactEmail" type="text" class="form-control" [(ngModel)]="vehicle.contact.email" name="contactEmail" required
-            #contactEmail="ngModel">
+               #contactEmail="ngModel">
     </div>
 
     <div class="alert alert-danger" *ngIf="contactEmail.touched && !contactEmail.valid">Please specify the Contact email.</div>

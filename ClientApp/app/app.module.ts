@@ -1,3 +1,4 @@
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import * as Raven from 'raven-js';
 import { FormsModule } from '@angular/forms';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -28,7 +29,8 @@ Raven
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        VehicleFormComponent
+        VehicleFormComponent,
+        VehicleListComponent
     ],
     imports: [
         FormsModule,
@@ -41,6 +43,7 @@ Raven
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: 'vehicles', component: VehicleListComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],

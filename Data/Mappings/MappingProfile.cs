@@ -25,6 +25,7 @@
                 .ForMember(vr => vr.Make, opt => opt.MapFrom(v => v.Model.Make));
 
             // API Resource to Domain
+            CreateMap<FilterResource, Filter>();
             CreateMap<SaveVehicleResource, Vehicle>()
               .ForMember(v => v.Id, opt => opt.Ignore())
               .ForMember(v => v.CreatedOn, opt => opt.Ignore())

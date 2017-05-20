@@ -18,13 +18,19 @@ namespace Vega.Services
             _vehicles = vehicles;
         }
 
-        public IEnumerable<Vehicle> GetAll(bool withDeleted = false)
+        public IEnumerable<Vehicle> GetAll(Filter filter, bool withDeleted = false)
         {
-            return _vehicles.GetAll(withDeleted, 
+            var query = _vehicles.GetAll(withDeleted, 
                 vehicles => vehicles
                 .Include(v => v.Model).ThenInclude(m => m.Make)
-                .Include(v => v.Features).ThenInclude(vf => vf.Feature))
-                .ToList();
+                .Include(v => v.Features).ThenInclude(vf => vf.Feature));
+                
+            if (filter.MakeId.HasValue) 
+            {
+                query = query.Where(x => x.Model.MakeId == filter.MakeId);   
+            }
+
+            return query.ToList();
         }
 
         public Vehicle GetById(int id, bool withIncludings = true)

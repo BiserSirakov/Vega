@@ -26,9 +26,11 @@ namespace Vega.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetVehicles()
+        public IActionResult GetVehicles(FilterResource filerResource)
         {
-            var vehicles = _vehicles.GetAll();
+            var filter = Mapper.Map<Filter>(filerResource);
+            var vehicles = _vehicles.GetAll(filter);
+            
             var result = Mapper.Map<IEnumerable<VehicleResource>>(vehicles);
 
             return Ok(result);
@@ -51,8 +53,6 @@ namespace Vega.Controllers
         [HttpPost]
         public IActionResult CreateVehicle([FromBody] SaveVehicleResource saveVehicleResource)
         {
-            throw new Exception();
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
