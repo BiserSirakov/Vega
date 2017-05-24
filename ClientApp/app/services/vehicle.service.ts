@@ -1,7 +1,8 @@
-﻿import { SaveVehicle } from './../models/saveVehicle';
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+
+import { SaveVehicle } from './../models/saveVehicle';
 
 @Injectable()
 
@@ -10,23 +11,18 @@ export class VehicleService {
 
     constructor(private http: Http) { }
 
-    getMakes() {
-        return this.http.get('/api/makes')
-            .map(res => res.json());
-    }
-
-    getFeatures() {
-        return this.http.get('api/features')
-            .map(res => res.json());
-    }
-
-    create(vehicle) {
-        return this.http.post(this.vehiclesEndpoint, vehicle)
+    getVehicles(filter) {
+        return this.http.get(this.vehiclesEndpoint + '?' + this.toQueryString(filter))
             .map(res => res.json());
     }
 
     getVehicle(id) {
         return this.http.get(this.vehiclesEndpoint + id)
+            .map(res => res.json());
+    }
+
+    create(vehicle) {
+        return this.http.post(this.vehiclesEndpoint, vehicle)
             .map(res => res.json());
     }
 
@@ -40,12 +36,17 @@ export class VehicleService {
             .map(res => res.json());
     }
 
-    getVehicles(filter) {
-        return this.http.get(this.vehiclesEndpoint + '?' + this.toQueryString(filter))
+    getMakes() {
+        return this.http.get('/api/makes')
             .map(res => res.json());
     }
 
-    toQueryString(obj) {
+    getFeatures() {
+        return this.http.get('api/features')
+            .map(res => res.json());
+    }
+
+    private toQueryString(obj) {
         var parts = [];
         for (var property in obj) {
             var value = obj[property];

@@ -1,13 +1,16 @@
 namespace Vega.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using Microsoft.EntityFrameworkCore;
 
+    using Contracts;
     using Data.Common;
     using Data.Models;
-    using Contracts;
+    using Extensions;
 
     public class VehiclesService : IVehiclesService
     {
@@ -18,19 +21,40 @@ namespace Vega.Services
             _vehicles = vehicles;
         }
 
-        public IEnumerable<Vehicle> GetAll(Filter filter, bool withDeleted = false)
+        public QueryResult<Vehicle> GetAll(VehicleQuery filter, bool withDeleted = false)
         {
-            var query = _vehicles.GetAll(withDeleted, 
-                vehicles => vehicles
+            var result = new QueryResult<Vehicle>();
+
+            var query = _vehicles.GetAll(vehicles => vehicles
                 .Include(v => v.Model).ThenInclude(m => m.Make)
-                .Include(v => v.Features).ThenInclude(vf => vf.Feature));
-                
-            if (filter.MakeId.HasValue) 
+                .Include(v => v.Features).ThenInclude(vf => vf.Feature), withDeleted);
+
+            if (filter.MakeId.HasValue)
             {
-                query = query.Where(x => x.Model.MakeId == filter.MakeId);   
+                query = query.Where(x => x.Model.MakeId == filter.MakeId.Value);
             }
 
-            return query.ToList();
+            if (filter.ModelId.HasValue)
+            {
+                query = query.Where(x => x.ModelId == filter.ModelId.Value);
+            }
+
+            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
+            {
+                ["make"] = v => v.Model.Make.Name,
+                ["model"] = v => v.Model.Name,
+                ["contactName"] = v => v.ContactName
+            };
+
+            query = query.ApplyOrdering(filter, columnsMap);
+
+            result.TotalItems = query.Count();
+
+            query = query.ApplyPaging(filter);
+
+            result.Items = query.ToList();
+
+            return result;
         }
 
         public Vehicle GetById(int id, bool withIncludings = true)

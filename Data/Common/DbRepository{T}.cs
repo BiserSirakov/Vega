@@ -15,16 +15,11 @@ namespace Vega.Data.Common
 
         public DbRepository(DbContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("An instance of DbContext is required to use this repository.", nameof(context));
-            }
-
-            _context = context;
+            _context = context ?? throw new ArgumentException("An instance of DbContext is required to use this repository.", nameof(context));
             _dbSet = _context.Set<T>();
         }
 
-        public IQueryable<T> GetAll(bool withDeleted = false, Func<IQueryable<T>, IQueryable<T>> func = null)
+        public IQueryable<T> GetAll(Func<IQueryable<T>, IQueryable<T>> func = null, bool withDeleted = false)
         {
             var all = withDeleted ? _dbSet : _dbSet.Where(x => !x.IsDeleted);
             return func == null ? all : func(all);

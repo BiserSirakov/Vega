@@ -23,6 +23,8 @@ namespace Vega.Data
 
         public DbSet<Vehicle> Vehicles { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VehicleFeature>().HasKey(x => new { x.VehicleId, x.FeatureId });

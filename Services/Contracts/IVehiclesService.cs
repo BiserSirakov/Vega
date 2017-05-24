@@ -7,7 +7,7 @@ namespace Vega.Services.Contracts
 
     public interface IVehiclesService
     {
-        IEnumerable<Vehicle> GetAll(Filter filter, bool withDeleted = false);
+        QueryResult<Vehicle> GetAll(VehicleQuery filter, bool withDeleted = false);
 
         Vehicle GetById(int id, bool withIncludings = true);
 

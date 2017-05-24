@@ -8,7 +8,7 @@ namespace Vega.Data.Common
     public interface IDbRepository<T>
         where T : BaseModel
     {
-        IQueryable<T> GetAll(bool withDeleted = false, Func<IQueryable<T>, IQueryable<T>> func = null);
+        IQueryable<T> GetAll(Func<IQueryable<T>, IQueryable<T>> func = null, bool withDeleted = false);
 
         T GetById(int id, Func<IQueryable<T>, IQueryable<T>> func = null);
 

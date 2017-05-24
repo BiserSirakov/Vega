@@ -10,6 +10,12 @@ namespace Vega.Data.Models
 
     public class Vehicle : BaseModel
     {
+        public Vehicle()
+        {
+            Features = new Collection<VehicleFeature>();
+            Photos = new Collection<Photo>();
+        }
+
         public int ModelId { get; set; }
 
         public Model Model { get; set; }
@@ -29,9 +35,6 @@ namespace Vega.Data.Models
 
         public ICollection<VehicleFeature> Features { get; set; }
 
-        public Vehicle()
-        {
-            Features = new Collection<VehicleFeature>();
-        }
+        public ICollection<Photo> Photos { get; set; }
     }
 }

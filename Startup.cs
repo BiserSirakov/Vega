@@ -12,6 +12,7 @@ namespace Vega
 
     using Data;
     using Data.Common;
+    using Data.Models;
     using Services;
     using Services.Contracts;
 
@@ -39,6 +40,9 @@ namespace Vega
             services.AddScoped<DbContext, VegaDbContext>();
 
             services.AddScoped<IVehiclesService, VehiclesService>();
+            services.AddScoped<IPhotosService, PhotosService>();
+
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
 
             services.AddAutoMapper();
 
